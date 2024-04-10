@@ -22,7 +22,7 @@ decoder instance_decoder(
   .d0(d0),
   .d1(d1),
   .d2(d2),
-  .d3(d3),  
+  .d3(d3)
 );
 
 initial begin
