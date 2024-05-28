@@ -2,55 +2,55 @@
 
 module FDE_tb();
 
-    // ì…ë ¥ ì‹ í˜¸
+    // ÀÔ·Â ½ÅÈ£
     reg clk;
     reg reset;
     reg stop;
 
-    // ì¶œë ¥ ì‹ í˜¸
+    // Ãâ·Â ½ÅÈ£
     wire [3:0] opcode;
-    wire [7:0] operand_1,
-    wire [7:0] operand_2,
-    wire [7:0] result,
+    wire [7:0] operand_1;
+    wire [7:0] operand_2;
+    wire [7:0] result;
     wire [3:0] pc;
 
-    // í…ŒìŠ¤íŠ¸í•  CPU ëª¨ë“ˆ
+    // Å×½ºÆ®ÇÒ CPU ¸ğµâ
     Top Top_inst(
         //input
-        .clk(clk),         // í´ëŸ­ ì…ë ¥
-        .reset(reset),     // ë¦¬ì…‹ ì‹ í˜¸ ì…ë ¥
-        .stop(stop),       // ì¤‘ì§€ ì‹ í˜¸ ì…ë ¥
+        .clk(clk),         // Å¬·° ÀÔ·Â
+        .reset(reset),     // ¸®¼Â ½ÅÈ£ ÀÔ·Â
+        .stop(stop),       // ÁßÁö ½ÅÈ£ ÀÔ·Â
 
         //output
         .opcode(opcode),
-        .srcadd_1(srcadd_1),
-        .srcadd_2(srcadd_2),
-        .dstadd(dstadd),
+        .operand_1(operand_1),
+        .operand_2(operand_2),
+        .result(result),
         .pc(pc)
     );
 
-    // ì´ˆê¸°í™” ë° ë™ì‘ ì‹œë‚˜ë¦¬ì˜¤
+    // ÃÊ±âÈ­ ¹× µ¿ÀÛ ½Ã³ª¸®¿À
     initial begin
-        // ì´ˆê¸°ê°’ ì„¤ì •
+        // ÃÊ±â°ª ¼³Á¤
         clk = 0; reset = 1; stop = 1;
         
         #10
-        reset = 0;        // ë¦¬ì…‹ ë¹„í™œì„±í™”
+        reset = 0;        // ¸®¼Â ºñÈ°¼ºÈ­
 
         #10
-        reset = 1;        // ë¦¬ì…‹ í™œì„±í™”
+        reset = 1;        // ¸®¼Â È°¼ºÈ­
 
         #100
-        stop = 0;         // ë©ˆì¶¤ ë¹„í™œì„±í™”
+        stop = 0;         // ¸ØÃã ºñÈ°¼ºÈ­
 
         #1000
-        $finish;          // í…ŒìŠ¤íŠ¸ ì¢…ë£Œ
+        $finish;          // Å×½ºÆ® Á¾·á
     end
 
-    // í´ëŸ­ ìƒì„±
+    // Å¬·° »ı¼º
     always begin
         #50
-        clk = ~clk;      // í´ëŸ­ ë°˜ì „
+        clk = ~clk;      // Å¬·° ¹İÀü
     end
 
 endmodule

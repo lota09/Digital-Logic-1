@@ -1,23 +1,23 @@
 module InstMem(
-    input clk,                // í´ëŸ­ ì…ë ¥
-    input reset,              // ë¦¬ì…‹ ì‹ í˜¸ ì…ë ¥
-    input stop,               // ì¤‘ì§€ ì‹ í˜¸ ì…ë ¥
-    input [3:0] pc,           // í”„ë¡œê·¸ë¨ ì¹´ìš´í„° ì…ë ¥ (4ë¹„íŠ¸)
-    output [15:0] instruction // ëª…ë ¹ì–´ ì¶œë ¥
+    input clk,                // Å¬·° ÀÔ·Â
+    input reset,              // ¸®¼Â ½ÅÈ£ ÀÔ·Â
+    input stop,               // ÁßÁö ½ÅÈ£ ÀÔ·Â
+    input [3:0] pc,           // ÇÁ·Î±×·¥ Ä«¿îÅÍ ÀÔ·Â (4ºñÆ®)
+    output reg [15:0] instruction // ¸í·É¾î Ãâ·Â
 );
 
-    reg [15:0] mem[15:0];     // ëª…ë ¹ì–´ ë©”ëª¨ë¦¬ 16bit * 16 = 32byte
+    reg [15:0] mem[15:0];     // ¸í·É¾î ¸Ş¸ğ¸® 16bit * 16 = 32byte
 
     always @(posedge clk or negedge reset) begin
-        if (~reset)              // ë¦¬ì…‹ ì‹œ
-            instruction <= 16'h0; // í˜„ì¬ ëª…ë ¹ì–´ ë ˆì§€ìŠ¤í„°ë¥¼ 0ìœ¼ë¡œ ì„¤ì •
-        else if (~stop)          // ì¤‘ì§€ ì‹ í˜¸ê°€ ì•„ë‹Œ ê²½ìš°
-            instruction <= mem[pc]; // í˜„ì¬ í”„ë¡œê·¸ë¨ ì¹´ìš´í„° ìœ„ì¹˜ì˜ ëª…ë ¹ì–´ë¥¼ ê°€ì ¸ì˜´
+        if (~reset)              // ¸®¼Â ½Ã
+            instruction <= 16'h0; // ÇöÀç ¸í·É¾î ·¹Áö½ºÅÍ¸¦ 0À¸·Î ¼³Á¤
+        else if (~stop)          // ÁßÁö ½ÅÈ£°¡ ¾Æ´Ñ °æ¿ì
+            instruction <= mem[pc]; // ÇöÀç ÇÁ·Î±×·¥ Ä«¿îÅÍ À§Ä¡ÀÇ ¸í·É¾î¸¦ °¡Á®¿È
     end
     
-    // ì´ˆê¸° ëª…ë ¹ì–´ ì„¤ì •
+    // ÃÊ±â ¸í·É¾î ¼³Á¤
     initial begin
-        // Instruction ì˜ˆì œ 16ê°œ ì´ˆê¸°í™”
+        // Instruction ¿¹Á¦ 16°³ ÃÊ±âÈ­
         mem[0]  = 16'b0000_0000_0000_0000; // No operation
         mem[1]  = 16'b0001_0010_0100_0001; // ADD reg[2] + reg[1] to reg[1]
         mem[2]  = 16'b0010_0100_0010_0010; // SUB reg[4] - reg[2] to reg[2]
@@ -32,8 +32,8 @@ module InstMem(
         mem[11] = 16'b1011_0101_0110_1100; // NOT reg[5] to reg[12]
         mem[12] = 16'b1100_0010_1011_0010; // AND reg[2] & reg[11] to reg[2]
         mem[13] = 16'b1101_0001_0010_1101; // OR reg[1] | reg[2] to reg[13]
-        mem[14] = 16'b1110_0011_0117_0001; // XOR reg[3] ^ reg[7] to reg[1]
-        mem[15] = 16'b1111_0111_0105_0011; // Shift left reg[7] << 5 to reg[3]
+        mem[14] = 16'b1110_0011_0111_0001; // XOR reg[3] ^ reg[7] to reg[1]
+        mem[15] = 16'b1111_0111_0101_0011; // Shift left reg[7] << 5 to reg[3]
     end
 
 endmodule

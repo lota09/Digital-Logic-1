@@ -1,7 +1,7 @@
 module Top(
-    input   clk,              // í´ëŸ­ ì…ë ¥
-    input   reset,            // ë¦¬ì…‹ ì‹ í˜¸ ì…ë ¥
-    input   stop,             // ì¤‘ì§€ ì‹ í˜¸ ì…ë ¥
+    input   clk,              // Å¬·° ÀÔ·Â
+    input   reset,            // ¸®¼Â ½ÅÈ£ ÀÔ·Â
+    input   stop,             // ÁßÁö ½ÅÈ£ ÀÔ·Â
 
     output [3:0] opcode,
     output [7:0] operand_1,
@@ -11,46 +11,46 @@ module Top(
 );
 
 wire [15:0] instruction;
-wire [3:0] srcadd_1, srcadd_2, dstadd
+wire [3:0] srcadd_1, srcadd_2, dstadd;
 wire write_en;
 
 fetch fetch_inst(
-    .clk(clk),             // í´ëŸ­ ì…ë ¥
-    .reset(reset),           // ë¦¬ì…‹ ì‹ í˜¸ ì…ë ¥
-    .stop(stop),       // ë©ˆì¶¤ ì‹ í˜¸ ì…ë ¥
-    .pc(pc)  // í”„ë¡œê·¸ë¨ ì¹´ìš´í„° ì¶œë ¥
+    .clk(clk),             // Å¬·° ÀÔ·Â
+    .reset(reset),           // ¸®¼Â ½ÅÈ£ ÀÔ·Â
+    .stop(stop),       // ¸ØÃã ½ÅÈ£ ÀÔ·Â
+    .pc(pc)  // ÇÁ·Î±×·¥ Ä«¿îÅÍ Ãâ·Â
 );
 
 InstMem InstMem_inst(
     //input
-    .clk(clk),                // í´ëŸ­ ì…ë ¥
-    .reset(reset),              // ë¦¬ì…‹ ì‹ í˜¸ ì…ë ¥
-    .stop(stop),               // ì¤‘ì§€ ì‹ í˜¸ ì…ë ¥
-    .pc(pc),           // í”„ë¡œê·¸ë¨ ì¹´ìš´í„° ì…ë ¥ (4ë¹„íŠ¸)
+    .clk(clk),                // Å¬·° ÀÔ·Â
+    .reset(reset),              // ¸®¼Â ½ÅÈ£ ÀÔ·Â
+    .stop(stop),               // ÁßÁö ½ÅÈ£ ÀÔ·Â
+    .pc(pc),           // ÇÁ·Î±×·¥ Ä«¿îÅÍ ÀÔ·Â (4ºñÆ®)
 
     //output
-    .instruction(instruction) // ëª…ë ¹ì–´ ì¶œë ¥
+    .instruction(instruction) // ¸í·É¾î Ãâ·Â
 );
 
 decode decode_inst(
     //input
-    .instruction(instruction),  // ì…ë ¥ ëª…ë ¹ì–´
+    .instruction(instruction),  // ÀÔ·Â ¸í·É¾î
 
     //output
-    .opcode(opcode),       // ì¶œë ¥ opcode
-    .srcadd_1(srcadd_1),     // ì¶œë ¥ ì²« ë²ˆì§¸ ì†ŒìŠ¤ ì£¼ì†Œ
-    .srcadd_2(srcadd_2),     // ì¶œë ¥ ë‘ ë²ˆì§¸ ì†ŒìŠ¤ ì£¼ì†Œ
-    .dstadd(dstadd)        // ì¶œë ¥ ëŒ€ìƒ ì£¼ì†Œ
+    .opcode(opcode),       // Ãâ·Â opcode
+    .srcadd_1(srcadd_1),     // Ãâ·Â Ã¹ ¹øÂ° ¼Ò½º ÁÖ¼Ò
+    .srcadd_2(srcadd_2),     // Ãâ·Â µÎ ¹øÂ° ¼Ò½º ÁÖ¼Ò
+    .dstadd(dstadd)        // Ãâ·Â ´ë»ó ÁÖ¼Ò
 );
 
 execute execute_inst(
     //input
-    .clk(clk),             // í´ëŸ­ ì…ë ¥
-    .reset(reset),           // ë¦¬ì…‹ ì‹ í˜¸ ì…ë ¥
-    .opcode(opcode),    // ëª…ë ¹ì–´ opcode ì…ë ¥
-    .srcadd_1(srcadd_1),  // ì²« ë²ˆì§¸ ì†ŒìŠ¤ ë°ì´í„° ì…ë ¥
-    .srcadd_2(srcadd_2),  // ë‘ ë²ˆì§¸ ì†ŒìŠ¤ ë°ì´í„° ì…ë ¥
-    .dstadd(dstadd),     // ëŒ€ìƒ ì£¼ì†Œ ì…ë ¥ //FM decode
+    .clk(clk),             // Å¬·° ÀÔ·Â
+    .reset(reset),           // ¸®¼Â ½ÅÈ£ ÀÔ·Â
+    .opcode(opcode),    // ¸í·É¾î opcode ÀÔ·Â
+    .srcadd_1(srcadd_1),  // Ã¹ ¹øÂ° ¼Ò½º µ¥ÀÌÅÍ ÀÔ·Â
+    .srcadd_2(srcadd_2),  // µÎ ¹øÂ° ¼Ò½º µ¥ÀÌÅÍ ÀÔ·Â
+    .dstadd(dstadd),     // ´ë»ó ÁÖ¼Ò ÀÔ·Â //FM decode
 
     //output
     .operand_1(operand_1),

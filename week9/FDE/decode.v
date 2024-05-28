@@ -1,12 +1,12 @@
 module decode(
-    input [15:0] instruction,  // ì…ë ¥ ëª…ë ¹ì–´
-    output [3:0] opcode,       // ì¶œë ¥ opcode
-    output [3:0] srcadd_1,     // ì¶œë ¥ ì²« ë²ˆì§¸ ì†ŒìŠ¤ ì£¼ì†Œ
-    output [3:0] srcadd_2,     // ì¶œë ¥ ë‘ ë²ˆì§¸ ì†ŒìŠ¤ ì£¼ì†Œ
-    output [3:0] dstadd        // ì¶œë ¥ ëŒ€ìƒ ì£¼ì†Œ
+    input [15:0] instruction,  // ÀÔ·Â ¸í·É¾î
+    output [3:0] opcode,       // Ãâ·Â opcode
+    output [3:0] srcadd_1,     // Ãâ·Â Ã¹ ¹øÂ° ¼Ò½º ÁÖ¼Ò
+    output [3:0] srcadd_2,     // Ãâ·Â µÎ ¹øÂ° ¼Ò½º ÁÖ¼Ò
+    output [3:0] dstadd        // Ãâ·Â ´ë»ó ÁÖ¼Ò
 );
 
-    // ê° í•„ë“œë¥¼ ëª…ë ¹ì–´ì—ì„œ ì¶”ì¶œ
+    // °¢ ÇÊµå¸¦ ¸í·É¾î¿¡¼­ ÃßÃâ
     assign opcode = instruction[15:12];
     assign srcadd_1 = instruction[11:8];
     assign srcadd_2 = instruction[7:4];

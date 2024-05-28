@@ -1,40 +1,40 @@
 module execute(
-    input clk,               // í´ëŸ­ ì…ë ¥
-    input reset,             // ë¦¬ì…‹ ì‹ í˜¸ ì…ë ¥
-    input [3:0] opcode,     // ëª…ë ¹ì–´ opcode ì…ë ¥
-    input [3:0] srcadd_1,   // ì²« ë²ˆì§¸ ì†ŒìŠ¤ ë°ì´í„° ì…ë ¥
-    input [3:0] srcadd_2,   // ë‘ ë²ˆì§¸ ì†ŒìŠ¤ ë°ì´í„° ì…ë ¥
-    input [3:0] dstadd,     // ëŒ€ìƒ ì£¼ì†Œ ì…ë ¥ //FM decode
+    input clk,               // Å¬·° ÀÔ·Â
+    input reset,             // ¸®¼Â ½ÅÈ£ ÀÔ·Â
+    input [3:0] opcode,     // ¸í·É¾î opcode ÀÔ·Â
+    input [3:0] srcadd_1,   // Ã¹ ¹øÂ° ¼Ò½º µ¥ÀÌÅÍ ÀÔ·Â
+    input [3:0] srcadd_2,   // µÎ ¹øÂ° ¼Ò½º µ¥ÀÌÅÍ ÀÔ·Â
+    input [3:0] dstadd,     // ´ë»ó ÁÖ¼Ò ÀÔ·Â //FM decode
 
-    output reg [7:0] operand_1 = 8'b0, // ì´ˆê¸°ê°’ ì„¤ì •
-    output reg [7:0] operand_2 = 8'b0, // ì´ˆê¸°ê°’ ì„¤ì •
-    output reg [7:0] result = 8'b0,    // ì´ˆê¸°ê°’ ì„¤ì •
-    output reg write_en = 1'b0        // ì´ˆê¸°ê°’ ì„¤ì •
+    output [7:0] operand_1, // ÃÊ±âÈ­¸¦ Á¦°ÅÇÕ´Ï´Ù.
+    output [7:0] operand_2, // ÃÊ±âÈ­¸¦ Á¦°ÅÇÕ´Ï´Ù.
+    output [7:0] result,    // ÃÊ±âÈ­¸¦ Á¦°ÅÇÕ´Ï´Ù.
+    output write_en         // ÃÊ±âÈ­¸¦ Á¦°ÅÇÕ´Ï´Ù.
 );
 
-    // ë ˆì§€ìŠ¤í„° ëª¨ë“ˆ ì¸ìŠ¤í„´ìŠ¤ ìƒì„± (ì½ê¸°ìš©)
+    // ·¹Áö½ºÅÍ ¸ğµâ ÀÎ½ºÅÏ½º »ı¼º (ÀĞ±â¿ë)
     ReadRegister readsrc_1(
         .address(srcadd_1),
-        .data_read(operand_1) // srcadd_1 ì£¼ì†Œì—ì„œ ì½ì€ ë°ì´í„°
+        .data_read(operand_1) // srcadd_1 ÁÖ¼Ò¿¡¼­ ÀĞÀº µ¥ÀÌÅÍ
     );
     ReadRegister readsrc_2(
         .address(srcadd_2),
-        .data_read(operand_2) // srcadd_2 ì£¼ì†Œì—ì„œ ì½ì€ ë°ì´í„°
+        .data_read(operand_2) // srcadd_2 ÁÖ¼Ò¿¡¼­ ÀĞÀº µ¥ÀÌÅÍ
     );
 
-    // ALU ëª¨ë“ˆ ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
+    // ALU ¸ğµâ ÀÎ½ºÅÏ½º »ı¼º
     alu alu_inst (
-        .opcode(opcode[2:0]),   // opcodeì˜ í•˜ìœ„ 3ë¹„íŠ¸ë¥¼ ì „ë‹¬
+        .opcode(opcode[2:0]),   // opcodeÀÇ ÇÏÀ§ 3ºñÆ®¸¦ Àü´Ş
         .operand1(operand_1),
         .operand2(operand_2),
         .result(result)
     );
 
-    // ë ˆì§€ìŠ¤í„° ëª¨ë“ˆ ì¸ìŠ¤í„´ìŠ¤ ìƒì„± (ì“°ê¸°ìš©)
+    // ·¹Áö½ºÅÍ ¸ğµâ ÀÎ½ºÅÏ½º »ı¼º (¾²±â¿ë)
     WriteRegister writedst(
         .address(dstadd),
-        .data_write(result),    // ê²°ê³¼ ê°’ì„ ì“°ê¸° ë°ì´í„°ë¡œ ì„¤ì •
-        .write_en(write_en)    // ì“°ê¸° ë™ì‘ í™œì„±í™” ì‹ í˜¸
+        .data_write(result),    // °á°ú °ªÀ» ¾²±â µ¥ÀÌÅÍ·Î ¼³Á¤
+        .write_en(write_en)    // ¾²±â µ¿ÀÛ È°¼ºÈ­ ½ÅÈ£
     );
 
 endmodule
