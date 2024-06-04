@@ -4,12 +4,13 @@ module Register(
     input write_en,
     output reg [7:0] data_read
 );
-    reg [7:0] regi[15:0];  // °ª ¸Ş¸ğ¸® 1byte * 16
+    reg [7:0] regi[15:0];  // ê°’ ë©”ëª¨ë¦¬ 1byte * 16
 
-    // ¸Ş¸ğ¸® ÃÊ±âÈ­ ºí·Ï
+    // ë©”ëª¨ë¦¬ ì´ˆê¸°í™” ë¸”ë¡
 
 initial begin
-    regi[1]  = 8'd0;
+    regi[0]  = 8'd0;
+    regi[1]  = 8'd28;
     regi[2]  = 8'd64;
     regi[3]  = 8'd96;
     regi[4]  = 8'd128;
@@ -26,12 +27,12 @@ initial begin
     regi[15] = 8'd32;
 end
 
-    // ÀĞ±â µ¿ÀÛ ¼öÇà
+    // ì½ê¸° ë™ì‘ ìˆ˜í–‰
     always @(address) begin
         data_read = regi[address];
     end
 
-    // ¾²±â µ¿ÀÛ ¼öÇà
+    // ì“°ê¸° ë™ì‘ ìˆ˜í–‰
     always @(posedge write_en) begin
         if (write_en) begin
             regi[address] = data_write;
@@ -45,8 +46,8 @@ module ReadRegister(
 );
 Register regi_inst (
     .address(address),
-    .data_write(8'b0),   // ¾²±â µ¿ÀÛ¿¡ »ç¿ëµÇÁö ¾ÊÀ¸¹Ç·Î 0À¸·Î ÃÊ±âÈ­
-    .write_en(1'b0),     // ¾²±â µ¿ÀÛ ºñÈ°¼ºÈ­
+    .data_write(8'b0),   // ì“°ê¸° ë™ì‘ì— ì‚¬ìš©ë˜ì§€ ì•Šìœ¼ë¯€ë¡œ 0ìœ¼ë¡œ ì´ˆê¸°í™”
+    .write_en(1'b0),     // ì“°ê¸° ë™ì‘ ë¹„í™œì„±í™”
     .data_read(data_read)
 );
 endmodule
